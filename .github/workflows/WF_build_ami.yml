@@ -12,17 +12,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Setup Python3
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Setup Ansible
-        run: |
-          python -m pip install --upgrade pip
-          pip install ansible requests
-          which ansible-playbook
-
       # fix does not work for hcl - skipping
       # fix backwards incompatibilities in template
       #- name: Fix Template
@@ -43,8 +32,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          #arguments: "-color=false -on-error=cleanup"
-          arguments: "-color=false -on-error=abort"
+          arguments: "-color=false -on-error=cleanup"
           target: packer.pkr.hcl
         env:
           PACKER_LOG: 1
